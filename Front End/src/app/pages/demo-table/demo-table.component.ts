@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReportService } from '../../@core/data/report.service';
 
@@ -8,29 +8,43 @@ import { ReportService } from '../../@core/data/report.service';
   styleUrls: ['./demo-table.component.css']
 })
 export class DemoTableComponent implements OnInit {
+  @Input() size: number;
 
   records: Array<any>;
   page: number = 0;
-  size: number = 50;
   subTotal: number = 0;
   total: number = 0; 
   throttle: number = 300;
   scrollDistance: number = 1;
   isLoadingResults: boolean = false;
+  customerID: string;
+  searchBarPlaceholder: string = "Type Customer ID...";
 
-  constructor(private reportService: ReportService) {
-  }
+  constructor(private reportService: ReportService) {}
 
   ngOnInit() {
-  	this.appendRecords();
+  	this.refresh();
   }
 
-  appendRecords() {
+  refresh(customerID: string = undefined) {
+    this.customerID = customerID;
+    this.appendRecords(true);
+  }
+
+  appendRecords(needRefresh: boolean = false) {
   	this.isLoadingResults = true;
-    console.log('scrolled down!!');
-    this.reportService.getDemo(this.page, this.size).subscribe(
+    this.size = this.size || 50;
+    if (needRefresh) {
+      this.page = 0;
+      this.subTotal = 0;
+    }
+    this.reportService.getDemo(this.page, this.size, this.customerID).subscribe(
     	data => {
-    		this.records = this.records?(this.records.concat(data.content)):(data.content);
+        if(!this.records || needRefresh){
+           this.records = data.content;
+        }else {
+           this.records = this.records.concat(data.content);
+        }
     		this.page++;
     		this.subTotal += data.numberOfElements;
     		this.total = data.totalElements

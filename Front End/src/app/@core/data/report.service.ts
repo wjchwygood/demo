@@ -11,8 +11,11 @@ export class ReportService {
   
   constructor(private http: HttpClient) { }
 
-  getDemo(page: number = 0, size: number = 15): Observable<Data> {
-	  const url = `http://13.59.183.39:8080/demo/find?page=${page}&size=${size}`;
+  getDemo(page: number = 0, size: number = 15, customerID: string): Observable<Data> {
+	  let url = `http://13.59.183.39:8080/demo/find?page=${page}&size=${size}`;
+	  if(customerID) {
+	  	url += `&customer_id=${customerID}`;
+	  }
 	  return this.http.get<Data>(url);
   }
 

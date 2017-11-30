@@ -18,7 +18,7 @@ describe('ReportService', () => {
   it('should get 20 elements', inject([ReportService], (service: ReportService) => {
   	const page: number = 0;
   	const size: number = 20;
-    service.getDemo(page, size).subscribe(data => {
+    service.getDemo(page, size, undefined).subscribe(data => {
     	expect(data.numberOfElements).toBe(size);
     })
   }));
