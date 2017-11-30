@@ -1,0 +1,15 @@
+/*
+* @Author: Mike
+* @Date:   2017-11-23 18:46:45
+* @Last Modified by:   Mike
+* @Last Modified time: 2017-11-24 17:36:39
+*/
+
+:host {
+	background: green;
+}
+
+
+#nb-global-spinner {
+	display:  none;
+}

@@ -1,0 +1,32 @@
+/*
+* @Author: Mike
+* @Date:   2017-11-24 16:56:47
+* @Last Modified by:   Jiacheng
+* @Last Modified time: 2017-11-28 14:37:15
+*/
+.logo-containter {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.logo-containter .navigation {
+    padding-right: 1.25rem;
+    font-size: 2.5rem;
+    text-decoration: none;
+}
+
+.logo-containter .logo {
+    padding: 0 1.25rem;
+    font-size: 1.75rem;
+    font-weight: 500;
+    border-left: 1px solid #ebeef2;
+    white-space: nowrap;
+}
+
+.ion-social-github:before {
+    font-size: 30px;
+}

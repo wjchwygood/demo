@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">Demo of Online Retailer Data Set</div>
+  <div class="card-body">
+  	<my-spinner *ngIf="isLoadingResults"></my-spinner>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Invoice No.</th>
+          <th scope="col">Stock Code</th>
+          <th scope="col">Description</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Invoice Date</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Customer ID</th>
+          <th scope="col">Country</th>
+        </tr>
+      </thead>
+      <tbody class="search-results" data-infinite-scroll [infiniteScrollDistance]="scrollDistance" 
+      [infiniteScrollThrottle]="throttle" (scrolled)="appendRecords()" [scrollWindow]="false">
+        <tr *ngFor="let record of records">
+          <td>{{record.id}}</td>
+          <td>{{record.invoiceNo}}</td>
+          <td>{{record.stockCode}}</td>
+          <td>{{record.description}}</td>
+          <td>{{record.quantity}}</td>
+          <td>{{record.invoiceDate | date: "long"}}</td>
+          <td>{{record.unitPrice}}</td>
+          <td>{{record.customerID}}</td>
+          <td>{{record.country}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">{{subTotal}} of {{total}}</div>
+</div>

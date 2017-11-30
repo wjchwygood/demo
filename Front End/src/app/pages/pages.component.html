@@ -1,0 +1,16 @@
+<nb-layout [center]="false" windowMode>
+  <nb-layout-header fixed>
+    <div class="logo-containter">
+      <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+      <div class="logo">Report-<span>Demo</span></div>
+      <a href="https://github.com/" target="_blank"><i class="ion ion-social-github"></i></a>
+    </div>
+  </nb-layout-header>
+  <nb-sidebar responsive>
+    <nb-menu [items]='menu'></nb-menu>
+  </nb-sidebar>
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+  <nb-layout-footer>Demo by Jiacheng</nb-layout-footer>
+</nb-layout>
