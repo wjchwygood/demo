@@ -2,7 +2,7 @@
   <div class="card-header">Demo of Online Retailer Data Set</div>
   <div class="card-body">
     <demo-search-bar (searchEmitter)="refresh($event)" [placeholder]="searchBarPlaceholder"></demo-search-bar>
-  	<my-spinner *ngIf="isLoadingResults"></my-spinner>
+    <my-spinner *ngIf="isLoadingResults"></my-spinner>
     <table class="table">
       <thead>
         <tr>
@@ -17,7 +17,7 @@
           <th scope="col">Country</th>
         </tr>
       </thead>
-      <tbody class="search-results" data-infinite-scroll [infiniteScrollDistance]="scrollDistance" 
+      <tbody #table class="search-results" data-infinite-scroll [infiniteScrollDistance]="scrollDistance" 
       [infiniteScrollThrottle]="throttle" (scrolled)="appendRecords()" [scrollWindow]="false">
         <tr *ngFor="let record of records">
           <td>{{record.id}}</td>

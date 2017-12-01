@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReportService } from '../../@core/data/report.service';
 
@@ -9,6 +9,7 @@ import { ReportService } from '../../@core/data/report.service';
 })
 export class DemoTableComponent implements OnInit {
   @Input() size: number;
+  @ViewChild('table') table: ElementRef;
 
   records: Array<any>;
   page: number = 0;
@@ -23,7 +24,7 @@ export class DemoTableComponent implements OnInit {
   constructor(private reportService: ReportService) {}
 
   ngOnInit() {
-  	this.refresh();
+    this.refresh();
   }
 
   refresh(customerID: string = undefined) {
@@ -32,31 +33,35 @@ export class DemoTableComponent implements OnInit {
   }
 
   appendRecords(needRefresh: boolean = false) {
-  	this.isLoadingResults = true;
+    if ( !needRefresh && (this.subTotal === this.total)) {
+      return;
+    }
+    this.isLoadingResults = true;
     this.size = this.size || 50;
     if (needRefresh) {
       this.page = 0;
       this.subTotal = 0;
+      this.table.nativeElement.scrollTop = 0;
     }
     this.reportService.getDemo(this.page, this.size, this.customerID).subscribe(
-    	data => {
+      data => {
         if(!this.records || needRefresh){
            this.records = data.content;
         }else {
            this.records = this.records.concat(data.content);
         }
-    		this.page++;
-    		this.subTotal += data.numberOfElements;
-    		this.total = data.totalElements
-    		this.isLoadingResults = false;
-    	},
-    	(err: HttpErrorResponse) => {
-    		if(err.error instanceof Error) {
-    			console.error('An error occured:', err.error.message);
-    		} else {
-    			console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
-    		}
-    	}
+        this.page++;
+        this.subTotal += data.numberOfElements;
+        this.total = data.totalElements
+        this.isLoadingResults = false;
+      },
+      (err: HttpErrorResponse) => {
+        if(err.error instanceof Error) {
+          console.error('An error occured:', err.error.message);
+        } else {
+          console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+        }
+      }
     );
   }
   
